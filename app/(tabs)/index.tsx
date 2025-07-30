@@ -44,10 +44,12 @@ export default function Dashboard() {
         </View>
 
         {/* Metrics Grid */}
-        <View style={styles.metricsGrid}>
-          {businessMetrics.map((metric, index) => (
-            <MetricCard key={index} {...metric} />
-          ))}
+        <View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.metricsGrid}>
+            {businessMetrics.map((metric, index) => (
+              <MetricCard key={index} {...metric} />
+            ))}
+          </ScrollView>
         </View>
 
         {/* Revenue Chart */}
@@ -170,8 +172,6 @@ const styles = StyleSheet.create({
   },
   metricsGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
     paddingHorizontal: 0,
     marginBottom: 24,
     gap: cardMargin,

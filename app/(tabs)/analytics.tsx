@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Calendar, TrendingUp, ChartPie as PieChart } from 'lucide-react-native';
+import { Calendar, TrendingUp, PieChart as PieChartIcon } from 'lucide-react-native';
 import RevenueChart from '@/components/RevenueChart';
 import MetricCard from '@/components/MetricCard';
 import { weeklyRevenueData, monthlyRevenueData, businessMetrics } from '@/data/mockData';
@@ -55,10 +55,12 @@ export default function Analytics() {
         </View>
 
         {/* Key Metrics */}
-        <View style={styles.metricsGrid}>
-          {businessMetrics.map((metric, index) => (
-            <MetricCard key={index} {...metric} />
-          ))}
+        <View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.metricsGrid}>
+            {businessMetrics.map((metric, index) => (
+              <MetricCard key={index} {...metric} />
+            ))}
+          </ScrollView>
         </View>
 
         {/* Revenue Trend Chart */}
@@ -68,50 +70,28 @@ export default function Analytics() {
           color="#10B981"
         />
 
-        {/* Performance Summary */}
-        <View style={styles.summaryCard}>
-          <View style={styles.summaryHeader}>
-            <TrendingUp size={24} color="#10B981" />
-            <Text style={styles.summaryTitle}>Performance Summary</Text>
-          </View>
-          <View style={styles.summaryStats}>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>+24.5%</Text>
-              <Text style={styles.statLabel}>Revenue Growth</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>156</Text>
-              <Text style={styles.statLabel}>Total Transactions</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>$294.55</Text>
-              <Text style={styles.statLabel}>Avg Transaction</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Insights */}
+        {/* Insights Card */}
         <View style={styles.insightsCard}>
           <View style={styles.insightsHeader}>
-            <PieChart size={24} color="#3B82F6" />
+            <PieChartIcon size={24} color="#3B82F6" />
             <Text style={styles.insightsTitle}>Key Insights</Text>
           </View>
           <View style={styles.insightItem}>
             <View style={styles.insightDot} />
             <Text style={styles.insightText}>
-              Revenue is up 24.5% compared to last month, primarily driven by consulting services
+              Revenue is up 24.5% compared to last month, primarily driven by consulting services.
             </Text>
           </View>
           <View style={styles.insightItem}>
             <View style={[styles.insightDot, { backgroundColor: '#F59E0B' }]} />
             <Text style={styles.insightText}>
-              Transaction volume increased by 15% with higher average transaction values
+              Transaction volume increased by 15% with higher average transaction values.
             </Text>
           </View>
           <View style={styles.insightItem}>
             <View style={[styles.insightDot, { backgroundColor: '#8B5CF6' }]} />
             <Text style={styles.insightText}>
-              Recurring revenue streams show consistent growth pattern
+              Recurring revenue streams show consistent growth patterns.
             </Text>
           </View>
         </View>
@@ -181,51 +161,9 @@ const styles = StyleSheet.create({
   },
   metricsGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
     paddingHorizontal: 0,
     marginBottom: 24,
     gap: cardMargin,
-  },
-  summaryCard: {
-    backgroundColor: '#1F2937',
-    borderRadius: 16,
-    padding: width * 0.06,
-    marginHorizontal: 0,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#374151',
-    width: '100%',
-    maxWidth: 420,
-    alignSelf: 'center',
-  },
-  summaryHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  summaryTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginLeft: 12,
-  },
-  summaryStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#10B981',
-    marginBottom: 4,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#9CA3AF',
   },
   insightsCard: {
     backgroundColor: '#1F2937',
