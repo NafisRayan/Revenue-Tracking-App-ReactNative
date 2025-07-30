@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { VictoryArea, VictoryChart, VictoryAxis } from 'victory-native';
-import { VictoryTheme } from 'victory';
+import { VictoryArea, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 import { Svg, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { ChartData } from '@/types/financial';
 
