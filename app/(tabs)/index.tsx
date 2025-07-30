@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Bell, User, ArrowUpRight } from 'lucide-react-native';
 import MetricCard from '@/components/MetricCard';
@@ -20,12 +20,12 @@ export default function Dashboard() {
             <Text style={styles.welcomeText}>Welcome back</Text>
           </View>
           <View style={styles.headerIcons}>
-            <TouchableOpacity style={styles.iconButton}>
-              <Bell size={24} color="#9CA3AF" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton}>
-              <User size={24} color="#9CA3AF" />
-            </TouchableOpacity>
+<TouchableOpacity style={styles.iconButton} onPress={() => console.log('Bell pressed')}>
+  <Bell size={24} color="#9CA3AF" />
+</TouchableOpacity>
+<TouchableOpacity style={styles.iconButton} onPress={() => console.log('User pressed')}>
+  <User size={24} color="#9CA3AF" />
+</TouchableOpacity>
           </View>
         </View>
 
@@ -34,12 +34,12 @@ export default function Dashboard() {
           <Text style={styles.balanceLabel}>Your Balance is</Text>
           <Text style={styles.balanceAmount}>${revenueMetrics.totalRevenue.toLocaleString()}</Text>
           <View style={styles.balanceActions}>
-            <TouchableOpacity style={styles.actionButton}>
-              <Text style={styles.actionButtonText}>Add Money</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.actionButton, styles.transferButton]}>
-              <Text style={styles.transferButtonText}>Transfer</Text>
-            </TouchableOpacity>
+<TouchableOpacity style={styles.actionButton} onPress={() => console.log('Add Money pressed')}>
+  <Text style={styles.actionButtonText}>Add Money</Text>
+</TouchableOpacity>
+<TouchableOpacity style={[styles.actionButton, styles.transferButton]} onPress={() => console.log('Transfer pressed')}>
+  <Text style={styles.transferButtonText}>Transfer</Text>
+</TouchableOpacity>
           </View>
         </View>
 
@@ -60,10 +60,10 @@ export default function Dashboard() {
         {/* Recent Transactions */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Recent Transactions</Text>
-          <TouchableOpacity style={styles.viewAllButton}>
-            <Text style={styles.viewAllText}>View All</Text>
-            <ArrowUpRight size={16} color="#10B981" />
-          </TouchableOpacity>
+<TouchableOpacity style={styles.viewAllButton} onPress={() => console.log('View All pressed')}>
+  <Text style={styles.viewAllText}>View All</Text>
+  <ArrowUpRight size={16} color="#10B981" />
+</TouchableOpacity>
         </View>
 
         <View style={styles.transactionsList}>
@@ -80,17 +80,24 @@ export default function Dashboard() {
   );
 }
 
+const { width } = Dimensions.get('window');
+const horizontalPadding = width * 0.05; // 5% of screen width
+const cardMargin = width * 0.025; // 2.5% of screen width
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111827',
+    paddingHorizontal: horizontalPadding,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingVertical: 16,
+    marginTop: 8,
+    marginBottom: 8,
   },
   greeting: {
     fontSize: 16,
@@ -118,9 +125,13 @@ const styles = StyleSheet.create({
   balanceCard: {
     backgroundColor: '#F59E0B',
     borderRadius: 20,
-    padding: 24,
-    marginHorizontal: 20,
+    padding: width * 0.06,
+    marginHorizontal: 0,
     marginBottom: 24,
+    marginTop: 8,
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   balanceLabel: {
     fontSize: 16,
@@ -160,14 +171,16 @@ const styles = StyleSheet.create({
   metricsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: 14,
+    justifyContent: 'space-between',
+    paddingHorizontal: 0,
     marginBottom: 24,
+    gap: cardMargin,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 16,
   },
   sectionTitle: {
@@ -186,7 +199,7 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   transactionsList: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingBottom: 20,
   },
 });

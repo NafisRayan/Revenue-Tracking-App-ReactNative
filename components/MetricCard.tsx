@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { TrendingUp, TrendingDown, ChartBar as BarChart, Users, DollarSign } from 'lucide-react-native';
 
 interface MetricCardProps {
@@ -44,15 +44,22 @@ export default function MetricCard({ title, value, change, icon, color }: Metric
   );
 }
 
+const { width } = Dimensions.get('window');
+const cardWidth = width > 500 ? width * 0.44 : width * 0.9; // 2 cards per row on tablet, 1 per row on mobile
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1F2937',
     borderRadius: 16,
-    padding: 20,
-    flex: 1,
+    padding: width * 0.045,
+    width: cardWidth,
+    minWidth: 140,
+    maxWidth: 320,
     marginHorizontal: 6,
+    marginBottom: 14,
     borderWidth: 1,
     borderColor: '#374151',
+    alignSelf: 'center',
   },
   header: {
     flexDirection: 'row',

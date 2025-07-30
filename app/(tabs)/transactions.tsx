@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, Filter, ArrowLeft } from 'lucide-react-native';
 import TransactionItem from '@/components/TransactionItem';
@@ -27,13 +27,13 @@ export default function Transactions() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
-          <ArrowLeft size={24} color="#FFFFFF" />
-        </TouchableOpacity>
+<TouchableOpacity style={styles.backButton} onPress={() => console.log('Back pressed')}>
+  <ArrowLeft size={24} color="#FFFFFF" />
+</TouchableOpacity>
         <Text style={styles.headerTitle}>Transactions</Text>
-        <TouchableOpacity style={styles.filterButton}>
-          <Filter size={24} color="#9CA3AF" />
-        </TouchableOpacity>
+<TouchableOpacity style={styles.filterButton} onPress={() => console.log('Filter pressed')}>
+  <Filter size={24} color="#9CA3AF" />
+</TouchableOpacity>
       </View>
 
       {/* Search Bar */}
@@ -94,22 +94,28 @@ export default function Transactions() {
   );
 }
 
+const { width } = Dimensions.get('window');
+const horizontalPadding = width * 0.05;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111827',
+    paddingHorizontal: horizontalPadding,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingVertical: 16,
+    marginTop: 8,
+    marginBottom: 8,
   },
   backButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: width * 0.11,
+    height: width * 0.11,
+    borderRadius: (width * 0.11) / 2,
     backgroundColor: '#1F2937',
     justifyContent: 'center',
     alignItems: 'center',
@@ -122,9 +128,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   filterButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: width * 0.11,
+    height: width * 0.11,
+    borderRadius: (width * 0.11) / 2,
     backgroundColor: '#1F2937',
     justifyContent: 'center',
     alignItems: 'center',
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
     borderColor: '#374151',
   },
   searchContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 16,
   },
   searchBar: {
@@ -140,23 +146,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1F2937',
     borderRadius: 12,
-    padding: 16,
+    padding: width * 0.04,
     borderWidth: 1,
     borderColor: '#374151',
   },
   searchInput: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: width * 0.03,
     fontSize: 16,
     color: '#FFFFFF',
   },
   filterTabs: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 20,
   },
   filterTab: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: width * 0.05,
+    paddingVertical: width * 0.025,
     marginRight: 12,
     borderRadius: 20,
     backgroundColor: '#1F2937',
@@ -177,12 +183,12 @@ const styles = StyleSheet.create({
   },
   transactionsList: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
   },
   emptyState: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 60,
+    paddingVertical: width * 0.15,
   },
   emptyStateText: {
     fontSize: 18,

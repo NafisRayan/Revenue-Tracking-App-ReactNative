@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { User, Bell, Shield, CreditCard, Download, CircleHelp as HelpCircle, ChevronRight, Moon, Globe, Lock } from 'lucide-react-native';
 
@@ -80,40 +80,49 @@ export default function Settings() {
             <Text style={styles.profileName}>Nesher Hamilton</Text>
             <Text style={styles.profileEmail}>nesher@example.com</Text>
           </View>
-          <TouchableOpacity style={styles.editButton}>
-            <Text style={styles.editButtonText}>Edit</Text>
-          </TouchableOpacity>
+<TouchableOpacity style={styles.editButton} onPress={() => console.log('Edit Profile pressed')}>
+  <Text style={styles.editButtonText}>Edit</Text>
+</TouchableOpacity>
         </View>
 
         {/* Settings Sections */}
         {settingSections.map((section, sectionIndex) => (
           <View key={sectionIndex} style={styles.section}>
             <Text style={styles.sectionTitle}>{section.title}</Text>
-            {section.items.map((item, itemIndex) => (
-              <TouchableOpacity key={itemIndex} style={styles.settingItem}>
-                <View style={styles.settingItemLeft}>
-                  <View style={styles.settingIcon}>
-                    <item.icon size={20} color="#9CA3AF" />
-                  </View>
-                  <View style={styles.settingItemContent}>
-                    <Text style={styles.settingTitle}>{item.title}</Text>
-                    <Text style={styles.settingSubtitle}>{item.subtitle}</Text>
-                  </View>
-                </View>
-                <View style={styles.settingItemRight}>
-                  {item.hasToggle ? (
-                    <Switch
-                      value={item.toggleValue}
-                      onValueChange={item.onToggle}
-                      trackColor={{ false: '#374151', true: '#10B981' }}
-                      thumbColor={'#FFFFFF'}
-                    />
-                  ) : (
-                    <ChevronRight size={20} color="#6B7280" />
-                  )}
-                </View>
-              </TouchableOpacity>
-            ))}
+{section.items.map((item, itemIndex) => (
+  <TouchableOpacity
+    key={itemIndex}
+    style={styles.settingItem}
+    onPress={
+      item.hasToggle
+        ? undefined
+        : () => console.log(`${item.title} pressed`)
+    }
+    activeOpacity={item.hasToggle ? 1 : 0.7}
+  >
+    <View style={styles.settingItemLeft}>
+      <View style={styles.settingIcon}>
+        <item.icon size={20} color="#9CA3AF" />
+      </View>
+      <View style={styles.settingItemContent}>
+        <Text style={styles.settingTitle}>{item.title}</Text>
+        <Text style={styles.settingSubtitle}>{item.subtitle}</Text>
+      </View>
+    </View>
+    <View style={styles.settingItemRight}>
+      {item.hasToggle ? (
+        <Switch
+          value={item.toggleValue}
+          onValueChange={item.onToggle}
+          trackColor={{ false: '#374151', true: '#10B981' }}
+          thumbColor={'#FFFFFF'}
+        />
+      ) : (
+        <ChevronRight size={20} color="#6B7280" />
+      )}
+    </View>
+  </TouchableOpacity>
+))}
           </View>
         ))}
 
@@ -124,22 +133,28 @@ export default function Settings() {
         </View>
 
         {/* Sign Out Button */}
-        <TouchableOpacity style={styles.signOutButton}>
-          <Text style={styles.signOutText}>Sign Out</Text>
-        </TouchableOpacity>
+<TouchableOpacity style={styles.signOutButton} onPress={() => console.log('Sign Out pressed')}>
+  <Text style={styles.signOutText}>Sign Out</Text>
+</TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
+const { width } = Dimensions.get('window');
+const horizontalPadding = width * 0.05;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111827',
+    paddingHorizontal: horizontalPadding,
   },
   header: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingVertical: 16,
+    marginTop: 8,
+    marginBottom: 8,
   },
   headerTitle: {
     fontSize: 24,
@@ -149,22 +164,25 @@ const styles = StyleSheet.create({
   profileCard: {
     backgroundColor: '#1F2937',
     borderRadius: 16,
-    padding: 20,
-    marginHorizontal: 20,
+    padding: width * 0.06,
+    marginHorizontal: 0,
     marginBottom: 24,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#374151',
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   profileAvatar: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: width * 0.16,
+    height: width * 0.16,
+    borderRadius: (width * 0.16) / 2,
     backgroundColor: '#10B981',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: width * 0.04,
   },
   profileInitials: {
     fontSize: 24,
@@ -186,8 +204,8 @@ const styles = StyleSheet.create({
   },
   editButton: {
     backgroundColor: '#374151',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: width * 0.04,
+    paddingVertical: width * 0.02,
     borderRadius: 8,
   },
   editButtonText: {
@@ -196,7 +214,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   section: {
-    marginHorizontal: 20,
+    marginHorizontal: 0,
     marginBottom: 24,
   },
   sectionTitle: {
@@ -208,7 +226,7 @@ const styles = StyleSheet.create({
   settingItem: {
     backgroundColor: '#1F2937',
     borderRadius: 12,
-    padding: 16,
+    padding: width * 0.04,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -222,13 +240,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   settingIcon: {
-    width: 40,
-    height: 40,
+    width: width * 0.1,
+    height: width * 0.1,
     borderRadius: 8,
     backgroundColor: '#374151',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: width * 0.03,
   },
   settingItemContent: {
     flex: 1,
@@ -248,7 +266,7 @@ const styles = StyleSheet.create({
   },
   versionSection: {
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: width * 0.05,
   },
   versionText: {
     fontSize: 14,
@@ -262,10 +280,13 @@ const styles = StyleSheet.create({
   signOutButton: {
     backgroundColor: '#EF4444',
     borderRadius: 12,
-    padding: 16,
-    marginHorizontal: 20,
+    padding: width * 0.04,
+    marginHorizontal: 0,
     marginBottom: 40,
     alignItems: 'center',
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   signOutText: {
     fontSize: 16,

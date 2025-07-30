@@ -4,19 +4,21 @@ import { VictoryArea, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 import { Svg, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { ChartData } from '@/types/financial';
 
+const { width } = Dimensions.get('window');
+const chartWidth = width * 0.9; // 90% of screen width
+const chartHeight = chartWidth * 0.6; // Maintain aspect ratio (e.g., 16:9 or 4:3)
+
 interface RevenueChartProps {
   data: ChartData[];
   title: string;
   color?: string;
 }
 
-const { width } = Dimensions.get('window');
-
 export default function RevenueChart({ data, title, color = '#10B981' }: RevenueChartProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Svg width={width - 40} height={200}>
+      <Svg width={chartWidth} height={chartHeight}>
         <Defs>
           <LinearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
             <Stop offset="0%" stopColor={color} stopOpacity="0.8" />
@@ -25,8 +27,8 @@ export default function RevenueChart({ data, title, color = '#10B981' }: Revenue
         </Defs>
         <VictoryChart
           theme={VictoryTheme.material}
-          width={width - 40}
-          height={200}
+          width={chartWidth}
+          height={chartHeight}
           padding={{ left: 50, top: 10, right: 20, bottom: 50 }}
           style={{
             background: { fill: 'transparent' }
@@ -72,10 +74,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1F2937',
     borderRadius: 16,
-    padding: 20,
+    padding: width * 0.05,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#374151',
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   title: {
     fontSize: 18,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FileText, Download, Mail, Calendar, Filter } from 'lucide-react-native';
 
@@ -60,23 +60,23 @@ export default function Reports() {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Reports</Text>
-          <TouchableOpacity style={styles.filterButton}>
-            <Filter size={24} color="#9CA3AF" />
-          </TouchableOpacity>
+<TouchableOpacity style={styles.filterButton} onPress={() => console.log('Filter pressed')}>
+  <Filter size={24} color="#9CA3AF" />
+</TouchableOpacity>
         </View>
 
         {/* Quick Actions */}
         <View style={styles.quickActions}>
-          <TouchableOpacity style={styles.actionCard}>
-            <FileText size={24} color="#10B981" />
-            <Text style={styles.actionTitle}>Generate Report</Text>
-            <Text style={styles.actionSubtitle}>Create new custom report</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionCard}>
-            <Calendar size={24} color="#3B82F6" />
-            <Text style={styles.actionTitle}>Schedule Report</Text>
-            <Text style={styles.actionSubtitle}>Automate report generation</Text>
-          </TouchableOpacity>
+<TouchableOpacity style={styles.actionCard} onPress={() => console.log('Generate Report pressed')}>
+  <FileText size={24} color="#10B981" />
+  <Text style={styles.actionTitle}>Generate Report</Text>
+  <Text style={styles.actionSubtitle}>Create new custom report</Text>
+</TouchableOpacity>
+<TouchableOpacity style={styles.actionCard} onPress={() => console.log('Schedule Report pressed')}>
+  <Calendar size={24} color="#3B82F6" />
+  <Text style={styles.actionTitle}>Schedule Report</Text>
+  <Text style={styles.actionSubtitle}>Automate report generation</Text>
+</TouchableOpacity>
         </View>
 
         {/* Quick Stats */}
@@ -145,14 +145,14 @@ export default function Reports() {
               </View>
               
               <View style={styles.reportActions}>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Download size={16} color="#10B981" />
-                  <Text style={styles.actionButtonText}>Download</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Mail size={16} color="#3B82F6" />
-                  <Text style={styles.actionButtonText}>Email</Text>
-                </TouchableOpacity>
+<TouchableOpacity style={styles.actionButton} onPress={() => console.log('Download pressed', report.id)}>
+  <Download size={16} color="#10B981" />
+  <Text style={styles.actionButtonText}>Download</Text>
+</TouchableOpacity>
+<TouchableOpacity style={styles.actionButton} onPress={() => console.log('Email pressed', report.id)}>
+  <Mail size={16} color="#3B82F6" />
+  <Text style={styles.actionButtonText}>Email</Text>
+</TouchableOpacity>
               </View>
             </View>
           ))}
@@ -162,11 +162,11 @@ export default function Reports() {
         <View style={styles.exportSection}>
           <Text style={styles.sectionTitle}>Export Options</Text>
           <View style={styles.exportGrid}>
-            {['PDF', 'Excel', 'CSV', 'JSON'].map((format) => (
-              <TouchableOpacity key={format} style={styles.exportButton}>
-                <Text style={styles.exportButtonText}>{format}</Text>
-              </TouchableOpacity>
-            ))}
+{['PDF', 'Excel', 'CSV', 'JSON'].map((format) => (
+  <TouchableOpacity key={format} style={styles.exportButton} onPress={() => console.log('Export pressed', format)}>
+    <Text style={styles.exportButtonText}>{format}</Text>
+  </TouchableOpacity>
+))}
           </View>
         </View>
       </ScrollView>
@@ -174,17 +174,24 @@ export default function Reports() {
   );
 }
 
+const { width } = Dimensions.get('window');
+const horizontalPadding = width * 0.05;
+const cardMargin = width * 0.025;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111827',
+    paddingHorizontal: horizontalPadding,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingVertical: 16,
+    marginTop: 8,
+    marginBottom: 8,
   },
   headerTitle: {
     fontSize: 24,
@@ -203,14 +210,15 @@ const styles = StyleSheet.create({
   },
   quickActions: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 24,
+    gap: cardMargin,
   },
   actionCard: {
     flex: 1,
     backgroundColor: '#1F2937',
     borderRadius: 16,
-    padding: 20,
+    padding: width * 0.05,
     marginRight: 12,
     borderWidth: 1,
     borderColor: '#374151',
@@ -229,7 +237,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   statsContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 24,
   },
   sectionTitle: {
@@ -245,7 +253,7 @@ const styles = StyleSheet.create({
   statCard: {
     backgroundColor: '#1F2937',
     borderRadius: 12,
-    padding: 16,
+    padding: width * 0.04,
     width: '48%',
     marginRight: '2%',
     marginBottom: 12,
@@ -269,12 +277,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   filterTabs: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 20,
   },
   filterTab: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: width * 0.05,
+    paddingVertical: width * 0.025,
     marginRight: 12,
     borderRadius: 20,
     backgroundColor: '#1F2937',
@@ -294,16 +302,19 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   reportsSection: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 24,
   },
   reportCard: {
     backgroundColor: '#1F2937',
     borderRadius: 16,
-    padding: 20,
+    padding: width * 0.06,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: '#374151',
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   reportHeader: {
     flexDirection: 'row',
@@ -377,7 +388,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   exportSection: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingBottom: 20,
   },
   exportGrid: {
@@ -387,7 +398,7 @@ const styles = StyleSheet.create({
   exportButton: {
     backgroundColor: '#1F2937',
     borderRadius: 12,
-    padding: 16,
+    padding: width * 0.04,
     width: '23%',
     marginRight: '2%',
     marginBottom: 12,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Transaction } from '@/types/financial';
 import { ChevronRight } from 'lucide-react-native';
 
@@ -47,11 +47,13 @@ export default function TransactionItem({ transaction, onPress }: TransactionIte
   );
 }
 
+const { width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1F2937',
     borderRadius: 12,
-    padding: 16,
+    padding: width * 0.04,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 12,
@@ -64,12 +66,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: width * 0.12,
+    height: width * 0.12,
+    borderRadius: (width * 0.12) / 2,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: width * 0.03,
   },
   iconDot: {
     width: 8,
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
   },
   rightSection: {
     alignItems: 'flex-end',
-    marginRight: 12,
+    marginRight: width * 0.03,
   },
   amount: {
     fontSize: 16,

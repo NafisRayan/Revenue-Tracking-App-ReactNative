@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar, TrendingUp, ChartPie as PieChart } from 'lucide-react-native';
 import RevenueChart from '@/components/RevenueChart';
@@ -26,9 +26,9 @@ export default function Analytics() {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Analytics</Text>
-          <TouchableOpacity style={styles.calendarButton}>
-            <Calendar size={24} color="#9CA3AF" />
-          </TouchableOpacity>
+<TouchableOpacity style={styles.calendarButton} onPress={() => console.log('Calendar pressed')}>
+  <Calendar size={24} color="#9CA3AF" />
+</TouchableOpacity>
         </View>
 
         {/* Period Selector */}
@@ -120,17 +120,24 @@ export default function Analytics() {
   );
 }
 
+const { width } = Dimensions.get('window');
+const horizontalPadding = width * 0.05;
+const cardMargin = width * 0.025;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111827',
+    paddingHorizontal: horizontalPadding,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingVertical: 16,
+    marginTop: 8,
+    marginBottom: 8,
   },
   headerTitle: {
     fontSize: 24,
@@ -148,7 +155,7 @@ const styles = StyleSheet.create({
     borderColor: '#374151',
   },
   periodSelector: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     marginBottom: 24,
   },
   periodTab: {
@@ -175,17 +182,22 @@ const styles = StyleSheet.create({
   metricsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: 14,
+    justifyContent: 'space-between',
+    paddingHorizontal: 0,
     marginBottom: 24,
+    gap: cardMargin,
   },
   summaryCard: {
     backgroundColor: '#1F2937',
     borderRadius: 16,
-    padding: 20,
-    marginHorizontal: 20,
+    padding: width * 0.06,
+    marginHorizontal: 0,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#374151',
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   summaryHeader: {
     flexDirection: 'row',
@@ -218,11 +230,14 @@ const styles = StyleSheet.create({
   insightsCard: {
     backgroundColor: '#1F2937',
     borderRadius: 16,
-    padding: 20,
-    marginHorizontal: 20,
+    padding: width * 0.06,
+    marginHorizontal: 0,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#374151',
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   insightsHeader: {
     flexDirection: 'row',
